@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getSupabaseServerClient } from "@/lib/supabaseServer";
-import { formatRupiah } from "@/components/ProductCard";
 import AddToCartButton from "@/components/AddToCartButton";
+import WhatsAppOrderButton from "@/components/WhatsAppOrderButton";
 
 export const revalidate = 0;
 
@@ -33,7 +33,6 @@ export default async function ProductDetailPage({ params }) {
           <p className="uppercase tracking-widest2 text-brass text-xs mb-4">{product.categories.name}</p>
         )}
         <h1 className="font-display text-4xl text-forest mb-4">{product.name}</h1>
-        <p className="text-2xl text-brass-dark mb-6">{formatRupiah(product.price)}</p>
         <div className="gold-rule w-16 mb-6" />
         <p className="text-charcoal/70 leading-relaxed mb-8">
           {product.description || "Tidak ada deskripsi untuk produk ini."}
@@ -42,6 +41,12 @@ export default async function ProductDetailPage({ params }) {
         <p className="text-sm text-charcoal/60 mb-8">
           {product.stock > 0 ? `Stok tersedia: ${product.stock}` : "Stok sedang habis"}
         </p>
+
+        <WhatsAppOrderButton
+          product={product}
+          label="Hubungi via WhatsApp"
+          className="mb-4 inline-flex w-fit items-center justify-center rounded-full border border-brass/40 bg-brass/10 px-6 py-3 text-sm font-medium uppercase tracking-widest2 text-brass-dark transition-colors hover:bg-brass hover:text-ivory"
+        />
 
         <AddToCartButton product={product} />
       </div>

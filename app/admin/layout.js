@@ -5,6 +5,7 @@ const navItems = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/products", label: "Produk", icon: Package },
   { href: "/admin/orders", label: "Pesanan", icon: ShoppingBag },
+  { href: "/admin/settings", label: "Halaman Depan", icon: LayoutDashboard },
 ];
 
 export default function AdminLayout({ children }) {

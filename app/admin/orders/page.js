@@ -1,5 +1,4 @@
 import { getSupabaseServerClient } from "@/lib/supabaseServer";
-import { formatRupiah } from "@/components/ProductCard";
 import OrderStatusSelect from "@/components/admin/OrderStatusSelect";
 
 export const revalidate = 0;
@@ -31,14 +30,14 @@ export default async function AdminOrdersPage() {
                 </p>
               </div>
               <div className="flex items-center gap-4">
-                <p className="font-display text-lg text-forest">{formatRupiah(order.total)}</p>
+                <p className="font-display text-lg text-forest">{order.total}</p>
                 <OrderStatusSelect orderId={order.id} currentStatus={order.status} />
               </div>
             </div>
             <ul className="text-sm text-charcoal/70 space-y-1 border-t border-charcoal/5 pt-4">
               {order.order_items?.map((item) => (
                 <li key={item.id}>
-                  {item.quantity}× {item.product_name} — {formatRupiah(item.price)}
+                  {item.quantity}× {item.product_name} — {item.price}
                 </li>
               ))}
             </ul>

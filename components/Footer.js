@@ -1,7 +1,15 @@
 import Link from "next/link";
-import { Instagram, Facebook, Mail } from "lucide-react";
+import { Instagram, Facebook, Mail, MessageCircle } from "lucide-react";
+import { getSupabaseServerClient } from "@/lib/supabaseServer";
+import { loadSiteSettings } from "@/lib/siteSettings";
 
-export default function Footer() {
+export default async function Footer() {
+  const supabase = getSupabaseServerClient();
+  const settings = await loadSiteSettings(supabase);
+  const whatsappLink = settings.whatsappNumber
+    ? `https://wa.me/${settings.whatsappNumber.replace(/\D/g, "")}`
+    : null;
+
   return (
     <footer className="bg-forest text-ivory">
       <div className="container-ruma py-16 grid grid-cols-1 md:grid-cols-4 gap-10">
@@ -35,6 +43,11 @@ export default function Footer() {
             <Instagram size={18} />
             <Facebook size={18} />
             <Mail size={18} />
+            {whatsappLink && (
+              <a href={whatsappLink} target="_blank" rel="noreferrer" aria-label="WhatsApp" className="hover:text-brass-light">
+                <MessageCircle size={18} />
+              </a>
+            )}
           </div>
         </div>
       </div>

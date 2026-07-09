@@ -3,9 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { formatRupiah } from "@/lib/utils";
+import WhatsAppOrderButton from "@/components/WhatsAppOrderButton";
 
 export default function ProductCard({ product, index = 0 }) {
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -14,7 +15,7 @@ export default function ProductCard({ product, index = 0 }) {
       transition={{ duration: 0.6, delay: (index % 4) * 0.08 }}
       className="group"
     >
-      <Link href={`/catalog/${product.id}`}>
+      <Link href={`/catalog/${product.id}`} className="block">
         <div className="relative aspect-[3/4] overflow-hidden bg-sand rounded-md">
           {product.image_url ? (
             <Image
@@ -37,9 +38,14 @@ export default function ProductCard({ product, index = 0 }) {
         </div>
         <div className="mt-4">
           <h3 className="font-display text-lg text-charcoal">{product.name}</h3>
-          <p className="text-brass-dark text-sm mt-1">{formatRupiah(product.price)}</p>
         </div>
       </Link>
+
+      <WhatsAppOrderButton
+        product={product}
+        label="Pesan via WhatsApp"
+        className="mt-3 inline-flex items-center justify-center rounded-full border border-forest/20 px-4 py-2 text-xs font-medium uppercase tracking-widest2 text-forest transition-colors hover:bg-forest hover:text-ivory"
+      />
     </motion.div>
   );
 }

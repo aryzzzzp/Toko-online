@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
 import { getCurrentProfile, getSupabaseServerClient } from "@/lib/supabaseServer";
-import { formatRupiah } from "@/components/ProductCard";
 
 export const revalidate = 0;
 
@@ -52,12 +51,12 @@ export default async function AccountPage() {
                     {statusLabel[order.status] || order.status}
                   </p>
                 </div>
-                <p className="font-display text-lg text-forest">{formatRupiah(order.total)}</p>
+                <p className="font-display text-lg text-forest">{order.total}</p>
               </div>
               <ul className="text-sm text-charcoal/70 space-y-1">
                 {order.order_items?.map((item) => (
                   <li key={item.id}>
-                    {item.quantity}× {item.product_name} — {formatRupiah(item.price)}
+                    {item.quantity}× {item.product_name} — {item.price}
                   </li>
                 ))}
               </ul>

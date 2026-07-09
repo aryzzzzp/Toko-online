@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import { getSupabaseServerClient } from "@/lib/supabaseServer";
-import { formatRupiah } from "@/components/ProductCard";
 import DeleteProductButton from "@/components/admin/DeleteProductButton";
 
 export const revalidate = 0;
@@ -45,7 +44,7 @@ export default async function AdminProductsPage() {
               <tr key={p.id} className="border-t border-charcoal/5">
                 <td className="px-5 py-4 font-medium text-charcoal">{p.name}</td>
                 <td className="px-5 py-4 text-charcoal/60">{p.categories?.name || "—"}</td>
-                <td className="px-5 py-4 text-charcoal/60">{formatRupiah(p.price)}</td>
+                <td className="px-5 py-4 text-charcoal/60">{p.price}</td>
                 <td className="px-5 py-4 text-charcoal/60">{p.stock}</td>
                 <td className="px-5 py-4">
                   <span

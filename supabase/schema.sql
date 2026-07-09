@@ -101,6 +101,12 @@ create table if not exists orders (
   created_at timestamptz default now()
 );
 
+create table if not exists site_settings (
+  key text primary key,
+  value text,
+  updated_at timestamptz default now()
+);
+
 create table if not exists order_items (
   id uuid primary key default gen_random_uuid(),
   order_id uuid references orders(id) on delete cascade,

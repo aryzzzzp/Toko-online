@@ -3,40 +3,30 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-
-const slides = [
-  {
-    image:
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop",
-    eyebrow: "Koleksi Musim Ini",
-    title: "Living, Curated.",
-    subtitle: "Perlengkapan rumah dan gaya hidup pilihan, dikurasi untuk keseharian yang lebih indah.",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=2000&auto=format&fit=crop",
-    eyebrow: "Edisi Terbatas",
-    title: "Detail Yang Berarti.",
-    subtitle: "Setiap produk dipilih karena kualitas, karakter, dan ceritanya.",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2000&auto=format&fit=crop",
-    eyebrow: "Kirim Ke Seluruh Indonesia",
-    title: "Belanja Dengan Tenang.",
-    subtitle: "Pengiriman aman, pembayaran terpercaya, layanan yang mengerti Anda.",
-  },
-];
+import { getSupabaseBrowserClient } from "@/lib/supabaseClient";
+import { defaultHeroSlides, loadSiteSettings } from "@/lib/siteSettings";
 
 export default function Hero() {
+  const [slides, setSlides] = useState(defaultHeroSlides);
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const t = setInterval(() => setIndex((i) => (i + 1) % slides.length), 6000);
-    return () => clearInterval(t);
+    async function loadSlides() {
+      const settings = await loadSiteSettings(getSupabaseBrowserClient());
+      setSlides(settings.heroSlides?.length ? settings.heroSlides : defaultHeroSlides);
+    }
+
+    loadSlides();
   }, []);
 
-  const slide = slides[index];
+  useEffect(() => {
+    if (!slides.length) return;
+
+    const t = setInterval(() => setIndex((i) => (i + 1) % slides.length), 6000);
+    return () => clearInterval(t);
+  }, [slides.length]);
+
+  const slide = slides[index] || defaultHeroSlides[0];
 
   return (
     <section className="relative h-screen min-h-[640px] w-full overflow-hidden">
@@ -51,7 +41,7 @@ export default function Hero() {
         >
           <div
             className="absolute inset-0 bg-cover bg-center animate-kenburns"
-            style={{ backgroundImage: `url(${slide.image})` }}
+            style={{ backgroundImage: `url(${slide.image_url || ""})` }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/70 via-charcoal/30 to-charcoal/40" />
         </motion.div>

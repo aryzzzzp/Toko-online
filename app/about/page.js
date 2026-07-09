@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { getSupabaseServerClient } from "@/lib/supabaseServer";
+import { loadSiteSettings } from "@/lib/siteSettings";
 
 export const metadata = { title: "Tentang Kami — RUMA" };
 
@@ -17,7 +19,13 @@ const values = [
   },
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const supabase = getSupabaseServerClient();
+  const settings = await loadSiteSettings(supabase);
+  const whatsappLink = settings.whatsappNumber
+    ? `https://wa.me/${settings.whatsappNumber.replace(/\D/g, "")}`
+    : null;
+
   return (
     <div>
       {/* Hero halaman */}
@@ -32,6 +40,16 @@ export default function AboutPage() {
         <div className="absolute inset-0 bg-forest-dark/60 flex flex-col items-center justify-center text-center px-6">
           <p className="uppercase tracking-widest2 text-brass-light text-xs mb-4">Cerita Kami</p>
           <h1 className="font-display italic text-4xl md:text-6xl text-ivory">Tentang RUMA</h1>
+          {whatsappLink && (
+            <a
+              href={whatsappLink}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-8 inline-flex items-center justify-center rounded-full border border-ivory/70 bg-ivory/10 px-6 py-3 text-sm font-medium uppercase tracking-widest2 text-ivory transition-colors hover:bg-ivory hover:text-forest"
+            >
+              Hubungi via WhatsApp
+            </a>
+          )}
         </div>
       </section>
 
@@ -58,6 +76,17 @@ export default function AboutPage() {
             Kami percaya belanja seharusnya terasa tenang, bukan terburu-buru — seperti berjalan di lorong
             toko favorit yang sudah mengenal selera Anda.
           </p>
+
+          {whatsappLink && (
+            <a
+              href={whatsappLink}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-6 inline-flex items-center justify-center rounded-full bg-brass px-6 py-3 text-sm font-medium uppercase tracking-widest2 text-ivory transition-colors hover:bg-brass-dark"
+            >
+              Hubungi via WhatsApp
+            </a>
+          )}
         </div>
       </section>
 
