@@ -83,7 +83,10 @@ export default function ProductForm({ categories, product }) {
       router.push("/admin/products");
       router.refresh();
     } catch (err) {
-      setError(err.message || "Terjadi kesalahan.");
+      // Log lengkap ke console untuk debugging RLS/auth/validation errors
+      console.error("Product save error:", err);
+      const message = err?.message || (err?.error && err.error.message) || JSON.stringify(err);
+      setError(message || "Terjadi kesalahan.");
     } finally {
       setLoading(false);
     }
