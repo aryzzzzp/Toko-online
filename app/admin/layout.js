@@ -12,7 +12,7 @@ export default function AdminLayout({ children }) {
   return (
     <div className="pt-20 min-h-screen flex bg-ivory">
       <aside className="w-64 border-r border-charcoal/10 hidden md:flex flex-col py-10 px-6 sticky top-20 h-[calc(100vh-5rem)]">
-        <p className="font-display italic text-xl text-forest mb-1">Bali Star Sofa</p>
+        <p className="font-display italic text-xl text-forest mb-1">Bali Stars Sofa</p>
         <p className="text-xs uppercase tracking-widest2 text-charcoal/40 mb-10">Panel Admin</p>
 
         <nav className="space-y-1 flex-1">

@@ -33,7 +33,7 @@ function LoginForm() {
   }
 
   return (
-    <div className="pt-32 pb-24 container-Bali-Star-Sofa max-w-md mx-auto">
+    <div className="pt-32 pb-24 container-Bali-Stars-Sofa max-w-md mx-auto">
       <div className="text-center mb-10">
         <p className="uppercase tracking-widest2 text-brass text-xs mb-4">Selamat Datang Kembali</p>
         <h1 className="font-display italic text-3xl text-forest">Masuk ke Akun Anda</h1>

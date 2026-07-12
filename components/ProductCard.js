@@ -27,7 +27,7 @@ export default function ProductCard({ product, index = 0 }) {
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-charcoal/30 font-display italic">
-              Bali Star Sofa
+              Bali Stars Sofa
             </div>
           )}
           {product.stock === 0 && (

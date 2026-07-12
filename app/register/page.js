@@ -38,7 +38,7 @@ export default function RegisterPage() {
 
   if (success) {
     return (
-      <div className="pt-40 pb-24 container-Bali-Star-Sofa max-w-md mx-auto text-center">
+      <div className="pt-40 pb-24 container-Bali-Stars-Sofa max-w-md mx-auto text-center">
         <h1 className="font-display italic text-3xl text-forest mb-4">Cek Email Anda</h1>
         <p className="text-charcoal/70 mb-8">
           Kami telah mengirim tautan konfirmasi ke email Anda. Silakan konfirmasi lalu masuk.
@@ -51,7 +51,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="pt-32 pb-24 container-Bali-Star-Sofa max-w-md mx-auto">
+    <div className="pt-32 pb-24 container-Bali-Stars-Sofa max-w-md mx-auto">
       <div className="text-center mb-10">
         <p className="uppercase tracking-widest2 text-brass text-xs mb-4">Bergabung Dengan Kami</p>
         <h1 className="font-display italic text-3xl text-forest">Buat Akun Baru</h1>

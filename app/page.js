@@ -13,7 +13,7 @@ export default async function HomePage() {
   const home = settings.home || defaultHomeSettings;
   const whatsappLink = buildWhatsAppLink({
     phoneNumber: settings.whatsappNumber,
-    message: "Halo, saya ingin bertanya tentang produk di Bali Star Sofa.",
+    message: "Halo, saya ingin bertanya tentang produk di Bali Stars Sofa.",
   });
 
   const { data: products } = await supabase
@@ -30,7 +30,7 @@ export default async function HomePage() {
       <Hero />
 
       {/* Pengantar */}
-      <section className="container-bali-star-sofa py-24 text-center">
+      <section className="container-bali-stars-sofa py-24 text-center">
         <p className="uppercase tracking-widest2 text-brass text-xs mb-4">{home.introEyebrow}</p>
         <h2 className="font-display italic text-3xl md:text-4xl text-forest max-w-2xl mx-auto leading-snug">
           {home.introTitle}
@@ -53,7 +53,7 @@ export default async function HomePage() {
 
       {/* Kategori */}
       {categories?.length > 0 && (
-        <section className="container-Bali-star-sofa pb-24">
+        <section className="container-Bali-stars-sofa pb-24">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {categories.map((c) => (
               <Link
@@ -71,11 +71,11 @@ export default async function HomePage() {
 
       {/* Produk unggulan */}
       <section className="bg-sand/50 py-24">
-        <div className="container-Bali Star Sofa">
+        <div className="container-Bali Stars Sofa">
           <div className="flex items-end justify-between mb-12">
             <div>
               <p className="uppercase tracking-widest2 text-brass text-xs mb-3">Produk Terbaru</p>
-              <h2 className="font-display text-3xl text-forest">Baru Tiba di Bali Star Sofa</h2>
+              <h2 className="font-display text-3xl text-forest">Baru Tiba di Bali Stars Sofa</h2>
             </div>
             <Link href="/catalog" className="text-sm uppercase tracking-widest2 text-forest border-b border-brass hidden md:block">
               Lihat Semua

@@ -2,7 +2,7 @@ import Image from "next/image";
 import { getSupabaseServerClient } from "@/lib/supabaseServer";
 import { loadSiteSettings } from "@/lib/siteSettings";
 
-export const metadata = { title: "Tentang Kami — Bali Star Sofa" };
+export const metadata = { title: "Tentang Kami — Bali Stars Sofa" };
 
 export default async function AboutPage() {
   const supabase = getSupabaseServerClient();
@@ -39,11 +39,11 @@ export default async function AboutPage() {
       </section>
 
       {/* Narasi */}
-      <section className="container-bali-star-sofa py-24 grid md:grid-cols-2 gap-16 items-center">
+      <section className="container-bali-stars-sofa py-24 grid md:grid-cols-2 gap-16 items-center">
         <div className="relative aspect-[4/5] rounded-md overflow-hidden">
           <Image
             src={about.secondaryImageUrl}
-            alt="Ruang kerja kurasi produk Bali Star Sofa"
+            alt="Ruang kerja kurasi produk Bali Stars Sofa"
             fill
             className="object-cover"
           />

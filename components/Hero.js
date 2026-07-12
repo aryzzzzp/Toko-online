@@ -19,7 +19,7 @@ export default function Hero() {
       setWhatsappLink(
         buildWhatsAppLink({
           phoneNumber: settings.whatsappNumber,
-          message: "Halo, saya ingin bertanya tentang produk di Bali Star Sofa.",
+          message: "Halo, saya ingin bertanya tentang produk di Bali Stars Sofa.",
         })
       );
     }

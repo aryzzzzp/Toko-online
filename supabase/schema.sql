@@ -1,5 +1,5 @@
 -- =========================================================
--- SKEMA DATABASE Bali Star Sofa — jalankan di Supabase SQL Editor
+-- SKEMA DATABASE Bali Stars Sofa — jalankan di Supabase SQL Editor
 -- =========================================================
 
 -- 1. Tabel PROFILES (data tambahan untuk setiap user, termasuk role)
