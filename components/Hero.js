@@ -5,15 +5,23 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { getSupabaseBrowserClient } from "@/lib/supabaseClient";
 import { defaultHeroSlides, loadSiteSettings } from "@/lib/siteSettings";
+import { buildWhatsAppLink } from "@/lib/utils";
 
 export default function Hero() {
   const [slides, setSlides] = useState(defaultHeroSlides);
   const [index, setIndex] = useState(0);
+  const [whatsappLink, setWhatsappLink] = useState(null);
 
   useEffect(() => {
     async function loadSlides() {
       const settings = await loadSiteSettings(getSupabaseBrowserClient());
       setSlides(settings.heroSlides?.length ? settings.heroSlides : defaultHeroSlides);
+      setWhatsappLink(
+        buildWhatsAppLink({
+          phoneNumber: settings.whatsappNumber,
+          message: "Halo, saya ingin bertanya tentang produk di Bali Star Sofa.",
+        })
+      );
     }
 
     loadSlides();
@@ -69,12 +77,23 @@ export default function Hero() {
           </motion.div>
         </AnimatePresence>
 
-        <Link
-          href="/catalog"
-          className="uppercase tracking-widest2 text-sm border border-ivory text-ivory px-8 py-3 rounded-full hover:bg-ivory hover:text-forest transition-colors duration-300"
-        >
-          Jelajahi Katalog
-        </Link>
+        {whatsappLink ? (
+          <a
+            href={whatsappLink}
+            target="_blank"
+            rel="noreferrer"
+            className="uppercase tracking-widest2 text-sm border border-ivory text-ivory px-8 py-3 rounded-full hover:bg-ivory hover:text-forest transition-colors duration-300"
+          >
+            Jelajahi Katalog
+          </a>
+        ) : (
+          <Link
+            href="/catalog"
+            className="uppercase tracking-widest2 text-sm border border-ivory text-ivory px-8 py-3 rounded-full hover:bg-ivory hover:text-forest transition-colors duration-300"
+          >
+            Jelajahi Katalog
+          </Link>
+        )}
 
         <div className="absolute bottom-10 flex gap-3">
           {slides.map((_, i) => (

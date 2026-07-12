@@ -18,9 +18,9 @@ const manrope = Manrope({
 });
 
 export const metadata = {
-  title: "RUMA — Living, Curated.",
+  title: "Bali Star Sofa — Living, Curated.",
   description:
-    "RUMA adalah toko retail online untuk perlengkapan hidup pilihan — fashion, rumah tangga, kecantikan, dan lainnya.",
+    "Bali Star Sofa adalah toko retail online untuk perlengkapan hidup pilihan — fashion, rumah tangga, kecantikan, dan lainnya.",
 };
 
 export default function RootLayout({ children }) {

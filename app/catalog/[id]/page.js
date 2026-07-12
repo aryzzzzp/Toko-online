@@ -17,13 +17,13 @@ export default async function ProductDetailPage({ params }) {
   if (!product) notFound();
 
   return (
-    <div className="pt-32 pb-24 container-ruma grid md:grid-cols-2 gap-14">
+    <div className="pt-32 pb-24 container-Bali-Star-Sofa grid md:grid-cols-2 gap-14">
       <div className="relative aspect-[3/4] bg-sand rounded-md overflow-hidden">
         {product.image_url ? (
           <Image src={product.image_url} alt={product.name} fill className="object-cover" />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-charcoal/30 font-display italic text-2xl">
-            RUMA
+            Bali Star Sofa
           </div>
         )}
       </div>

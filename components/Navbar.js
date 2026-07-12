@@ -34,14 +34,14 @@ export default function Navbar() {
         solid ? "bg-ivory/95 backdrop-blur-sm shadow-sm" : "bg-transparent"
       }`}
     >
-      <div className="container-ruma flex items-center justify-between h-20">
+      <div className="container-Bali-Star-Sofa flex items-center justify-between h-20">
         <Link
           href="/"
           className={`font-display text-2xl tracking-wide ${
             solid ? "text-forest" : "text-ivory"
           }`}
         >
-          RUMA
+          Bali Star Sofa
         </Link>
 
         <nav className="hidden md:flex items-center gap-10">

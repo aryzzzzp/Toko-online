@@ -20,13 +20,13 @@ html {
   color: #FAF7F2;
 }
 
-/* Divider tipis emas — elemen ciri khas RUMA */
+/* Divider tipis emas — elemen ciri khas Bali-star-sofa */
 .gold-rule {
   height: 1px;
   background: linear-gradient(90deg, transparent, #B08D57, transparent);
 }
 
-.container-ruma {
+.container-bali-star-sofa {
   max-width: 1280px;
   margin-left: auto;
   margin-right: auto;

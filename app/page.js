@@ -2,11 +2,19 @@ import Hero from "@/components/Hero";
 import ProductCard from "@/components/ProductCard";
 import Link from "next/link";
 import { getSupabaseServerClient } from "@/lib/supabaseServer";
+import { defaultHomeSettings, loadSiteSettings } from "@/lib/siteSettings";
+import { buildWhatsAppLink } from "@/lib/utils";
 
 export const revalidate = 0;
 
 export default async function HomePage() {
   const supabase = getSupabaseServerClient();
+  const settings = await loadSiteSettings(supabase);
+  const home = settings.home || defaultHomeSettings;
+  const whatsappLink = buildWhatsAppLink({
+    phoneNumber: settings.whatsappNumber,
+    message: "Halo, saya ingin bertanya tentang produk di Bali Star Sofa.",
+  });
 
   const { data: products } = await supabase
     .from("products")
@@ -22,17 +30,30 @@ export default async function HomePage() {
       <Hero />
 
       {/* Pengantar */}
-      <section className="container-ruma py-24 text-center">
-        <p className="uppercase tracking-widest2 text-brass text-xs mb-4">Selamat Datang di RUMA</p>
+      <section className="container-bali-star-sofa py-24 text-center">
+        <p className="uppercase tracking-widest2 text-brass text-xs mb-4">{home.introEyebrow}</p>
         <h2 className="font-display italic text-3xl md:text-4xl text-forest max-w-2xl mx-auto leading-snug">
-          Kami percaya rumah yang indah dimulai dari barang-barang yang dipilih dengan sengaja.
+          {home.introTitle}
         </h2>
+        <p className="text-charcoal/70 mt-6 max-w-3xl mx-auto">{home.introSubtitle}</p>
+        {whatsappLink ? (
+          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <a
+              href={whatsappLink}
+              target="_blank"
+              rel="noreferrer"
+              className="uppercase tracking-widest2 text-sm border border-forest text-forest px-8 py-3 rounded-full bg-forest/10 transition-colors duration-300 hover:bg-forest hover:text-ivory"
+            >
+              {home.ctaLabel}
+            </a>
+          </div>
+        ) : null}
         <div className="gold-rule w-24 mx-auto mt-8" />
       </section>
 
       {/* Kategori */}
       {categories?.length > 0 && (
-        <section className="container-ruma pb-24">
+        <section className="container-Bali-star-sofa pb-24">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {categories.map((c) => (
               <Link
@@ -50,11 +71,11 @@ export default async function HomePage() {
 
       {/* Produk unggulan */}
       <section className="bg-sand/50 py-24">
-        <div className="container-ruma">
+        <div className="container-Bali Star Sofa">
           <div className="flex items-end justify-between mb-12">
             <div>
               <p className="uppercase tracking-widest2 text-brass text-xs mb-3">Produk Terbaru</p>
-              <h2 className="font-display text-3xl text-forest">Baru Tiba di RUMA</h2>
+              <h2 className="font-display text-3xl text-forest">Baru Tiba di Bali Star Sofa</h2>
             </div>
             <Link href="/catalog" className="text-sm uppercase tracking-widest2 text-forest border-b border-brass hidden md:block">
               Lihat Semua
@@ -95,12 +116,18 @@ export default async function HomePage() {
             <h2 className="font-display italic text-3xl md:text-5xl text-ivory mb-6">
               Rasakan Pengalaman Belanja yang Tenang
             </h2>
-            <Link
-              href="/catalog"
-              className="uppercase tracking-widest2 text-sm border border-ivory text-ivory px-8 py-3 rounded-full hover:bg-ivory hover:text-forest transition-colors duration-300 inline-block"
-            >
-              Mulai Belanja
-            </Link>
+              {whatsappLink ? (
+              <div className="flex flex-col gap-4 items-center justify-center sm:flex-row">
+                <a
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="uppercase tracking-widest2 text-sm border border-ivory text-ivory px-8 py-3 rounded-full hover:bg-ivory hover:text-forest transition-colors duration-300 inline-block"
+                >
+                  {home.ctaLabel}
+                </a>
+              </div>
+            ) : null}
           </div>
         </div>
       </section>

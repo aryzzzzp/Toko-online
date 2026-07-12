@@ -12,9 +12,9 @@ export default async function Footer() {
 
   return (
     <footer className="bg-forest text-ivory">
-      <div className="container-ruma py-16 grid grid-cols-1 md:grid-cols-4 gap-10">
+      <div className="container-bal-star-sofa py-16 grid grid-cols-1 md:grid-cols-4 gap-10">
         <div>
-          <p className="font-display text-2xl mb-3">RUMA</p>
+          <p className="font-display text-2xl mb-3"></p>Bali Star Sofa
           <p className="text-ivory/70 text-sm leading-relaxed">
             Perlengkapan hidup pilihan untuk rumah dan gaya Anda — dikurasi dengan cermat, dikirim dengan hati-hati.
           </p>
@@ -53,7 +53,7 @@ export default async function Footer() {
       </div>
       <div className="gold-rule opacity-40" />
       <p className="text-center text-xs text-ivory/50 py-6">
-        © {new Date().getFullYear()} RUMA. Seluruh hak cipta dilindungi.
+        © {new Date().getFullYear()} Bali Star Sofa. Seluruh hak cipta dilindungi.
       </p>
     </footer>
   );

@@ -24,7 +24,7 @@ export default async function AccountPage() {
     .order("created_at", { ascending: false });
 
   return (
-    <div className="pt-32 pb-24 container-ruma max-w-3xl mx-auto">
+    <div className="pt-32 pb-24 container-Bali-Star-Sofa max-w-3xl mx-auto">
       <div className="mb-12">
         <p className="uppercase tracking-widest2 text-brass text-xs mb-3">Akun Saya</p>
         <h1 className="font-display italic text-3xl text-forest">

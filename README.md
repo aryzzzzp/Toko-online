@@ -1,4 +1,4 @@
-# RUMA — Website Toko Retail (Next.js + Tailwind + Supabase)
+# Bali Star Sofa — Website Toko Retail (Next.js + Tailwind + Supabase)
 
 Website jualan/retail lengkap dengan katalog produk, login user, dan panel admin.
 Dibangun dengan **Next.js 14 (App Router)**, **Tailwind CSS**, **JavaScript**, dan **Supabase**
@@ -102,7 +102,7 @@ sederhana — Anda bisa mengembangkannya lebih lanjut dengan menambahkan:
 
 ## 🎨 Desain
 
-Tema visual "RUMA" terinspirasi resort/butik mewah (seperti Ayana Resort): warna hijau
+Tema visual "Bali Star Sofa" terinspirasi resort/butik mewah (seperti Ayana Resort): warna hijau
 forest, sand, dan aksen brass/emas, tipografi serif italic (Fraunces) dipadu sans-serif
 (Manrope), serta hero slideshow dengan efek Ken Burns dan transisi lembut.
 

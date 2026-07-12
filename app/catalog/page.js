@@ -24,7 +24,7 @@ export default async function CatalogPage({ searchParams }) {
   const { data: products } = await query.order("created_at", { ascending: false });
 
   return (
-    <div className="pt-32 pb-24 container-ruma">
+    <div className="pt-32 pb-24 container-Bali-Star-Sofa">
       <div className="text-center mb-16">
         <p className="uppercase tracking-widest2 text-brass text-xs mb-4">Katalog</p>
         <h1 className="font-display italic text-4xl text-forest">Semua Produk</h1>
