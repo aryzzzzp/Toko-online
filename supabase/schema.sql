@@ -48,6 +48,7 @@ create table if not exists products (
   slug text not null unique,
   description text,
   price numeric(12,2) not null default 0,
+  original_price numeric(12,2),
   stock integer not null default 0,
   image_url text,
   category_id uuid references categories(id) on delete set null,

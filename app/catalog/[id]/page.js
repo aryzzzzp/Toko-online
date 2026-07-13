@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getSupabaseServerClient } from "@/lib/supabaseServer";
 import AddToCartButton from "@/components/AddToCartButton";
 import WhatsAppOrderButton from "@/components/WhatsAppOrderButton";
+import { formatRupiah } from "@/lib/utils";
 
 export const revalidate = 0;
 
@@ -38,9 +39,21 @@ export default async function ProductDetailPage({ params }) {
           {product.description || "Tidak ada deskripsi untuk produk ini."}
         </p>
 
-        <p className="text-sm text-charcoal/60 mb-8">
-          {product.stock > 0 ? `Stok tersedia: ${product.stock}` : "Stok sedang habis"}
-        </p>
+        <div className="mb-6">
+          {product.original_price && Number(product.original_price) > Number(product.price) ? (
+            <div className="flex items-baseline gap-4 mb-2">
+              <span className="text-sm text-charcoal/50 line-through">{formatRupiah(Number(product.original_price))}</span>
+              <span className="font-display text-2xl text-forest">{formatRupiah(Number(product.price))}</span>
+            </div>
+          ) : (
+            <div className="mb-2">
+              <span className="font-display text-2xl text-forest">{formatRupiah(Number(product.price))}</span>
+            </div>
+          )}
+          <p className="text-sm text-charcoal/60">
+            {product.stock > 0 ? `Stok tersedia: ${product.stock}` : "Stok sedang habis"}
+          </p>
+        </div>
 
         <WhatsAppOrderButton
           product={product}

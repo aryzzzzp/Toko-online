@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import WhatsAppOrderButton from "@/components/WhatsAppOrderButton";
+import { formatRupiah } from "@/lib/utils";
 
 export default function ProductCard({ product, index = 0 }) {
 
@@ -38,6 +39,20 @@ export default function ProductCard({ product, index = 0 }) {
         </div>
         <div className="mt-4">
           <h3 className="font-display text-lg text-charcoal">{product.name}</h3>
+          {typeof product.price !== "undefined" && (
+            <div className="mt-1">
+              {product.original_price && Number(product.original_price) > Number(product.price) ? (
+                <div className="flex items-baseline gap-3">
+                  <span className="text-sm text-charcoal/50 line-through">{formatRupiah(Number(product.original_price))}</span>
+                  <span className="font-display text-base text-forest">{formatRupiah(Number(product.price))}</span>
+                </div>
+              ) : (
+                <div>
+                  <span className="font-display text-base text-forest">{formatRupiah(Number(product.price))}</span>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </Link>
 

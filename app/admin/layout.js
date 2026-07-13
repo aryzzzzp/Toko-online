@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { LayoutDashboard, Package, ShoppingBag, ArrowLeft } from "lucide-react";
+import { LayoutDashboard, Package, ShoppingBag, ArrowLeft, Layers } from "lucide-react";
 
 const navItems = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/products", label: "Produk", icon: Package },
+  { href: "/admin/categories", label: "Kategori", icon: Layers },
   { href: "/admin/orders", label: "Pesanan", icon: ShoppingBag },
   { href: "/admin/settings", label: "Halaman Depan", icon: LayoutDashboard },
 ];

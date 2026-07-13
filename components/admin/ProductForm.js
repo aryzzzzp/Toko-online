@@ -5,6 +5,23 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { getSupabaseBrowserClient } from "@/lib/supabaseClient";
 
+function parseNumericFromString(v) {
+  if (v == null) return 0;
+  if (typeof v === "number") return v;
+  const digits = String(v).replace(/\D/g, "");
+  return digits ? Number(digits) : 0;
+}
+
+function formatPriceString(v) {
+  const n = parseNumericFromString(v);
+  return n ? new Intl.NumberFormat("id-ID").format(n) : "";
+}
+
+function unformatPriceString(v) {
+  if (v == null) return "";
+  return String(v).replace(/\D/g, "");
+}
+
 function slugify(text) {
   return text
     .toString()
@@ -22,7 +39,10 @@ export default function ProductForm({ categories, product }) {
 
   const [name, setName] = useState(product?.name || "");
   const [description, setDescription] = useState(product?.description || "");
-  const [price, setPrice] = useState(product?.price || "");
+  const [price, setPrice] = useState(product?.price ? formatPriceString(product.price) : "");
+  const [originalPrice, setOriginalPrice] = useState(
+    product?.original_price ? formatPriceString(product.original_price) : ""
+  );
   const [stock, setStock] = useState(product?.stock ?? "");
   const [categoryId, setCategoryId] = useState(product?.category_id || "");
   const [isActive, setIsActive] = useState(product?.is_active ?? true);
@@ -64,12 +84,14 @@ export default function ProductForm({ categories, product }) {
         name,
         slug: slugify(name) + "-" + Math.random().toString(36).slice(2, 7),
         description,
-        price: Number(price),
+        price: parseNumericFromString(price),
         stock: Number(stock),
         category_id: categoryId || null,
         is_active: isActive,
         image_url: finalImageUrl || null,
       };
+      // always include original_price (null when empty) so it can be cleared
+      payload.original_price = originalPrice ? parseNumericFromString(originalPrice) : null;
 
       if (isEdit) {
         delete payload.slug; // jangan ubah slug saat edit
@@ -120,10 +142,12 @@ export default function ProductForm({ categories, product }) {
             <label className="block text-xs uppercase tracking-widest2 text-charcoal/60 mb-2">Harga (Rp)</label>
             <input
               required
-              type="number"
-              min="0"
+              type="text"
+              inputMode="numeric"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
+              onBlur={(e) => setPrice(formatPriceString(e.target.value))}
+              onFocus={(e) => setPrice(unformatPriceString(e.target.value))}
               className="w-full border border-charcoal/20 rounded-md px-4 py-3 focus:outline-none focus:border-brass"
             />
           </div>
@@ -138,6 +162,20 @@ export default function ProductForm({ categories, product }) {
               className="w-full border border-charcoal/20 rounded-md px-4 py-3 focus:outline-none focus:border-brass"
             />
           </div>
+        </div>
+
+        <div>
+          <label className="block text-xs uppercase tracking-widest2 text-charcoal/60 mb-2">Harga Coret (opsional)</label>
+          <input
+            type="text"
+            inputMode="numeric"
+            value={originalPrice}
+            onChange={(e) => setOriginalPrice(e.target.value)}
+            onBlur={(e) => setOriginalPrice(formatPriceString(e.target.value))}
+            onFocus={(e) => setOriginalPrice(unformatPriceString(e.target.value))}
+            className="w-full border border-charcoal/20 rounded-md px-4 py-3 focus:outline-none focus:border-brass"
+            placeholder="Misal: 2.999.999"
+          />
         </div>
 
         <div>
