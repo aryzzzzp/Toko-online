@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero";
 import ProductCard from "@/components/ProductCard";
+import BackToTopButton from "@/components/BackToTopButton";
 import Link from "next/link";
 import { getSupabaseServerClient } from "@/lib/supabaseServer";
 import { defaultHomeSettings, loadSiteSettings } from "@/lib/siteSettings";
@@ -36,24 +37,12 @@ export default async function HomePage() {
           {home.introTitle}
         </h2>
         <p className="text-charcoal/70 mt-6 max-w-3xl mx-auto">{home.introSubtitle}</p>
-        {whatsappLink ? (
-          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <a
-              href={whatsappLink}
-              target="_blank"
-              rel="noreferrer"
-              className="uppercase tracking-widest2 text-sm border border-forest text-forest px-8 py-3 rounded-full bg-forest/10 transition-colors duration-300 hover:bg-forest hover:text-ivory"
-            >
-              {home.ctaLabel}
-            </a>
-          </div>
-        ) : null}
         <div className="gold-rule w-24 mx-auto mt-8" />
       </section>
 
       {/* Kategori */}
       {categories?.length > 0 && (
-        <section className="container-Bali-stars-sofa pb-24">
+          <section id="catalog-section" className="container-Bali-stars-sofa pb-24">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {categories.map((c) => (
               <Link
@@ -124,13 +113,14 @@ export default async function HomePage() {
                   rel="noreferrer"
                   className="uppercase tracking-widest2 text-sm border border-ivory text-ivory px-8 py-3 rounded-full hover:bg-ivory hover:text-forest transition-colors duration-300 inline-block"
                 >
-                  {home.ctaLabel}
+                  Pesan Sekarang
                 </a>
               </div>
             ) : null}
           </div>
         </div>
       </section>
+      <BackToTopButton />
     </>
   );
 }

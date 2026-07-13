@@ -131,12 +131,6 @@ export default function SiteSettingsPage() {
               placeholder="Deskripsi pengantar"
               className="w-full border border-charcoal/20 rounded-md px-4 py-3 focus:outline-none focus:border-brass"
             />
-            <input
-              value={home.ctaLabel}
-              onChange={(e) => updateHomeField("ctaLabel", e.target.value)}
-              placeholder="Label tombol CTA"
-              className="w-full border border-charcoal/20 rounded-md px-4 py-3 focus:outline-none focus:border-brass"
-            />
           </div>
         </div>
 

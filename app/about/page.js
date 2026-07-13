@@ -7,9 +7,6 @@ export const metadata = { title: "Tentang Kami — Bali Stars Sofa" };
 export default async function AboutPage() {
   const supabase = getSupabaseServerClient();
   const settings = await loadSiteSettings(supabase);
-  const whatsappLink = settings.whatsappNumber
-    ? `https://wa.me/${settings.whatsappNumber.replace(/\D/g, "")}`
-    : null;
   const about = settings.about;
 
   return (
@@ -25,16 +22,7 @@ export default async function AboutPage() {
         <div className="absolute inset-0 bg-forest-dark/60 flex flex-col items-center justify-center text-center px-6">
           <p className="uppercase tracking-widest2 text-brass-light text-xs mb-4">{about.heroEyebrow}</p>
           <h1 className="font-display italic text-4xl md:text-6xl text-ivory">{about.heroTitle}</h1>
-          {whatsappLink && (
-            <a
-              href={whatsappLink}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-8 inline-flex items-center justify-center rounded-full border border-ivory/70 bg-ivory/10 px-6 py-3 text-sm font-medium uppercase tracking-widest2 text-ivory transition-colors hover:bg-ivory hover:text-forest"
-            >
-              Hubungi via WhatsApp
-            </a>
-          )}
+          
         </div>
       </section>
 
@@ -54,16 +42,7 @@ export default async function AboutPage() {
           <p className="text-charcoal/70 leading-relaxed mb-4">{about.sectionBody1}</p>
           <p className="text-charcoal/70 leading-relaxed">{about.sectionBody2}</p>
 
-          {whatsappLink && (
-            <a
-              href={whatsappLink}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-6 inline-flex items-center justify-center rounded-full bg-brass px-6 py-3 text-sm font-medium uppercase tracking-widest2 text-ivory transition-colors hover:bg-brass-dark"
-            >
-              Hubungi via WhatsApp
-            </a>
-          )}
+          
         </div>
       </section>
 
