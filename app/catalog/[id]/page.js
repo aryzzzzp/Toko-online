@@ -4,6 +4,7 @@ import { getSupabaseServerClient } from "@/lib/supabaseServer";
 import AddToCartButton from "@/components/AddToCartButton";
 import WhatsAppOrderButton from "@/components/WhatsAppOrderButton";
 import { formatRupiah } from "@/lib/utils";
+import { normalizeProductImages, getPrimaryProductImage } from "@/lib/productImages";
 
 export const revalidate = 0;
 
@@ -17,14 +18,29 @@ export default async function ProductDetailPage({ params }) {
 
   if (!product) notFound();
 
+  const images = normalizeProductImages(product.image_url);
+  const primaryImage = getPrimaryProductImage(images);
+
   return (
     <div className="pt-32 pb-24 container-Bali-Stars-Sofa grid md:grid-cols-2 gap-14">
-      <div className="relative aspect-[3/4] bg-sand rounded-md overflow-hidden">
-        {product.image_url ? (
-          <Image src={product.image_url} alt={product.name} fill className="object-cover" />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-charcoal/30 font-display italic text-2xl">
-            Bali Stars Sofa
+      <div className="space-y-4">
+        <div className="relative aspect-[3/4] bg-sand rounded-md overflow-hidden">
+          {primaryImage ? (
+            <Image src={primaryImage} alt={product.name} fill className="object-cover" />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center text-charcoal/30 font-display italic text-2xl">
+              Bali Stars Sofa
+            </div>
+          )}
+        </div>
+
+        {images.length > 1 && (
+          <div className="grid grid-cols-3 gap-3">
+            {images.map((image, index) => (
+              <div key={`${image}-${index}`} className="relative aspect-square rounded-md overflow-hidden bg-sand">
+                <Image src={image} alt={`${product.name} ${index + 1}`} fill className="object-cover" />
+              </div>
+            ))}
           </div>
         )}
       </div>

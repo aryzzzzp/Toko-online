@@ -5,8 +5,11 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import WhatsAppOrderButton from "@/components/WhatsAppOrderButton";
 import { formatRupiah } from "@/lib/utils";
+import { getPrimaryProductImage, normalizeProductImages } from "@/lib/productImages";
 
 export default function ProductCard({ product, index = 0 }) {
+  const images = normalizeProductImages(product.image_url);
+  const primaryImage = getPrimaryProductImage(images);
 
   return (
     <motion.div
@@ -18,9 +21,9 @@ export default function ProductCard({ product, index = 0 }) {
     >
       <Link href={`/catalog/${product.id}`} className="block">
         <div className="relative aspect-[3/4] overflow-hidden bg-sand rounded-md">
-          {product.image_url ? (
+          {primaryImage ? (
             <Image
-              src={product.image_url}
+              src={primaryImage}
               alt={product.name}
               fill
               sizes="(max-width: 768px) 50vw, 25vw"

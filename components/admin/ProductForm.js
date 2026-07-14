@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { getSupabaseBrowserClient } from "@/lib/supabaseClient";
+import { normalizeProductImages, serializeProductImages, getPrimaryProductImage } from "@/lib/productImages";
 
 function parseNumericFromString(v) {
   if (v == null) return 0;
@@ -46,17 +47,41 @@ export default function ProductForm({ categories, product }) {
   const [stock, setStock] = useState(product?.stock ?? "");
   const [categoryId, setCategoryId] = useState(product?.category_id || "");
   const [isActive, setIsActive] = useState(product?.is_active ?? true);
-  const [imageUrl, setImageUrl] = useState(product?.image_url || "");
-  const [imageFile, setImageFile] = useState(null);
-  const [preview, setPreview] = useState(product?.image_url || "");
+  const [imageUrls, setImageUrls] = useState(() => normalizeProductImages(product?.image_url));
+  const [imageFiles, setImageFiles] = useState([]);
+  const [preview, setPreview] = useState(getPrimaryProductImage(product?.image_url));
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    return () => {
+      imageFiles.forEach((file) => URL.revokeObjectURL(file.preview));
+    };
+  }, [imageFiles]);
+
   function handleImageChange(e) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setImageFile(file);
-    setPreview(URL.createObjectURL(file));
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+
+    const items = files.map((file) => ({
+      file,
+      preview: URL.createObjectURL(file),
+    }));
+
+    setImageFiles((prev) => [...prev, ...items]);
+    setPreview(items[0].preview);
+  }
+
+  function removeImage(index) {
+    setImageFiles((prev) => {
+      const next = prev.filter((_, i) => i !== index);
+      if (!next.length) {
+        setPreview(getPrimaryProductImage(imageUrls));
+      } else if (index === 0) {
+        setPreview(next[0].preview);
+      }
+      return next;
+    });
   }
 
   async function handleSubmit(e) {
@@ -65,19 +90,21 @@ export default function ProductForm({ categories, product }) {
     setError("");
 
     try {
-      let finalImageUrl = imageUrl;
+      let uploadedUrls = [...imageUrls];
 
-      if (imageFile) {
-        const ext = imageFile.name.split(".").pop();
-        const path = `${Date.now()}-${slugify(name)}.${ext}`;
-        const { error: uploadError } = await supabase.storage
-          .from("product-images")
-          .upload(path, imageFile, { upsert: true });
+      if (imageFiles.length) {
+        for (const item of imageFiles) {
+          const ext = item.file.name.split(".").pop();
+          const path = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}-${slugify(name)}.${ext}`;
+          const { error: uploadError } = await supabase.storage
+            .from("product-images")
+            .upload(path, item.file, { upsert: true });
 
-        if (uploadError) throw uploadError;
+          if (uploadError) throw uploadError;
 
-        const { data } = supabase.storage.from("product-images").getPublicUrl(path);
-        finalImageUrl = data.publicUrl;
+          const { data } = supabase.storage.from("product-images").getPublicUrl(path);
+          uploadedUrls.push(data.publicUrl);
+        }
       }
 
       const payload = {
@@ -88,7 +115,7 @@ export default function ProductForm({ categories, product }) {
         stock: Number(stock),
         category_id: categoryId || null,
         is_active: isActive,
-        image_url: finalImageUrl || null,
+        image_url: serializeProductImages(uploadedUrls) || null,
       };
       // always include original_price (null when empty) so it can be cleared
       payload.original_price = originalPrice ? parseNumericFromString(originalPrice) : null;
@@ -211,7 +238,30 @@ export default function ProductForm({ categories, product }) {
             </div>
           )}
         </div>
-        <input type="file" accept="image/*" onChange={handleImageChange} className="text-sm" />
+        <input type="file" accept="image/*" multiple onChange={handleImageChange} className="text-sm" />
+        <p className="text-xs text-charcoal/50 mt-2">Bisa upload beberapa gambar sekaligus. Gambar pertama akan dipakai sebagai foto utama.</p>
+
+        {(imageUrls.length > 0 || imageFiles.length > 0) && (
+          <div className="grid grid-cols-3 gap-3 mt-4">
+            {imageUrls.map((url, index) => (
+              <div key={`${url}-${index}`} className="relative aspect-square rounded-md overflow-hidden border border-charcoal/10">
+                <Image src={url} alt={`Gambar ${index + 1}`} fill className="object-cover" />
+              </div>
+            ))}
+            {imageFiles.map((item, index) => (
+              <div key={`${item.preview}-${index}`} className="relative aspect-square rounded-md overflow-hidden border border-charcoal/10">
+                <Image src={item.preview} alt={`Preview ${index + 1}`} fill className="object-cover" />
+                <button
+                  type="button"
+                  onClick={() => removeImage(index)}
+                  className="absolute top-2 right-2 rounded-full bg-charcoal/70 px-2 py-1 text-[10px] uppercase tracking-widest2 text-ivory"
+                >
+                  Hapus
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
 
         {error && <p className="text-red-600 text-sm mt-4">{error}</p>}
 
