@@ -21,6 +21,11 @@ export const metadata = {
   title: "Bali Stars Sofa — Living, Curated.",
   description:
     "Bali Stars Sofa adalah toko retail online untuk perlengkapan hidup pilihan — fashion, rumah tangga, kecantikan, dan lainnya.",
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({ children }) {

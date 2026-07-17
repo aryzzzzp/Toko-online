@@ -35,13 +35,10 @@ export default function Navbar() {
       }`}
     >
       <div className="container-Bali-Stars-Sofa flex items-center justify-between h-20">
-        <Link
-          href="/"
-          className={`font-display text-2xl tracking-wide ${
-            solid ? "text-forest" : "text-ivory"
-          }`}
-        >
-          Bali Stars Sofa
+        <Link href="/" className="flex items-center gap-3">
+          <span className={`font-display text-2xl tracking-wide ${solid ? "text-forest" : "text-ivory"}`}>
+            Bali Stars Sofa
+          </span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-10">
