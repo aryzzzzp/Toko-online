@@ -21,6 +21,7 @@ export default function CategoryForm({ category }) {
 
   const [name, setName] = useState(category?.name || "");
   const [slug, setSlug] = useState(category?.slug || "");
+  const [imageUrl, setImageUrl] = useState(category?.image_url || "");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -33,6 +34,7 @@ export default function CategoryForm({ category }) {
       const payload = {
         name,
         slug: slug || slugify(name) + "-" + Math.random().toString(36).slice(2, 6),
+        image_url: imageUrl || null,
       };
 
       if (isEdit) {
@@ -73,6 +75,16 @@ export default function CategoryForm({ category }) {
         <input
           value={slug}
           onChange={(e) => setSlug(e.target.value)}
+          className="w-full border border-charcoal/20 rounded-md px-4 py-3 focus:outline-none focus:border-brass"
+        />
+      </div>
+
+      <div className="mb-4">
+        <label className="block text-xs uppercase tracking-widest2 text-charcoal/60 mb-2">Gambar Kategori (URL)</label>
+        <input
+          value={imageUrl}
+          onChange={(e) => setImageUrl(e.target.value)}
+          placeholder="https://..."
           className="w-full border border-charcoal/20 rounded-md px-4 py-3 focus:outline-none focus:border-brass"
         />
       </div>

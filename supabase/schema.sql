@@ -38,6 +38,7 @@ create table if not exists categories (
   id uuid primary key default gen_random_uuid(),
   name text not null unique,
   slug text not null unique,
+  image_url text,
   created_at timestamptz default now()
 );
 

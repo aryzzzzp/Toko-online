@@ -5,6 +5,7 @@ import Link from "next/link";
 import { getSupabaseServerClient } from "@/lib/supabaseServer";
 import { defaultHomeSettings, loadSiteSettings } from "@/lib/siteSettings";
 import { buildWhatsAppLink } from "@/lib/utils";
+import { getPrimaryProductImage, normalizeProductImages } from "@/lib/productImages";
 
 export const revalidate = 0;
 
@@ -25,6 +26,22 @@ export default async function HomePage() {
     .limit(8);
 
   const { data: categories } = await supabase.from("categories").select("*").limit(4);
+  const categoryIds = categories?.map((c) => c.id) || [];
+  const { data: latestProducts } = categoryIds.length
+    ? await supabase
+        .from("products")
+        .select("*")
+        .in("category_id", categoryIds)
+        .eq("is_active", true)
+        .order("created_at", { ascending: false })
+    : { data: [] };
+
+  const latestProductByCategoryId = new Map();
+  latestProducts?.forEach((product) => {
+    if (!latestProductByCategoryId.has(product.category_id)) {
+      latestProductByCategoryId.set(product.category_id, product);
+    }
+  });
 
   return (
     <>
@@ -44,16 +61,24 @@ export default async function HomePage() {
       {categories?.length > 0 && (
           <section id="catalog-section" className="container-Bali-stars-sofa pb-24">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {categories.map((c) => (
-              <Link
-                key={c.id}
-                href={`/catalog?category=${c.slug}`}
-                className="relative h-52 rounded-md overflow-hidden bg-forest flex items-end p-5 group"
-              >
-                <div className="absolute inset-0 bg-forest/40 group-hover:bg-forest/20 transition-colors" />
-                <span className="relative z-10 text-ivory font-display italic text-xl">{c.name}</span>
-              </Link>
-            ))}
+            {categories.map((c) => {
+              const fallbackProduct = latestProductByCategoryId.get(c.id);
+              const backgroundImage =
+                c.image_url ||
+                (fallbackProduct && getPrimaryProductImage(normalizeProductImages(fallbackProduct.image_url)));
+
+              return (
+                <Link
+                  key={c.id}
+                  href={`/catalog?category=${c.slug}`}
+                  className="relative h-52 rounded-md overflow-hidden bg-forest bg-cover bg-center flex items-end p-5 group"
+                  style={backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : undefined}
+                >
+                  <div className="absolute inset-0 bg-forest/40 group-hover:bg-forest/20 transition-colors" />
+                  <span className="relative z-10 text-ivory font-display italic text-xl">{c.name}</span>
+                </Link>
+              );
+            })}
           </div>
         </section>
       )}
