@@ -231,6 +231,36 @@ export default function SiteSettingsPage() {
               className="w-full border border-charcoal/20 rounded-md px-4 py-3 focus:outline-none focus:border-brass"
             />
             <input
+              value={about.locationTitle}
+              onChange={(e) => updateAboutField("locationTitle", e.target.value)}
+              placeholder="Judul lokasi"
+              className="w-full border border-charcoal/20 rounded-md px-4 py-3 focus:outline-none focus:border-brass"
+            />
+            <input
+              value={about.locationAddress}
+              onChange={(e) => updateAboutField("locationAddress", e.target.value)}
+              placeholder="Alamat"
+              className="w-full border border-charcoal/20 rounded-md px-4 py-3 focus:outline-none focus:border-brass"
+            />
+            <input
+              value={about.locationCity}
+              onChange={(e) => updateAboutField("locationCity", e.target.value)}
+              placeholder="Kota / Provinsi"
+              className="w-full border border-charcoal/20 rounded-md px-4 py-3 focus:outline-none focus:border-brass"
+            />
+            <input
+              value={about.locationPhone}
+              onChange={(e) => updateAboutField("locationPhone", e.target.value)}
+              placeholder="Telepon"
+              className="w-full border border-charcoal/20 rounded-md px-4 py-3 focus:outline-none focus:border-brass"
+            />
+            <input
+              value={about.locationHours}
+              onChange={(e) => updateAboutField("locationHours", e.target.value)}
+              placeholder="Jam buka"
+              className="w-full border border-charcoal/20 rounded-md px-4 py-3 focus:outline-none focus:border-brass"
+            />
+            <input
               value={about.sectionEyebrow}
               onChange={(e) => updateAboutField("sectionEyebrow", e.target.value)}
               placeholder="Teks kecil di narasi"
