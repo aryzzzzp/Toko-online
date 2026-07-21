@@ -95,7 +95,9 @@ export default async function AboutPage() {
               </div>
               <div>
                 <p className="text-sm uppercase tracking-widest2 text-brass-light mb-2">Jam Buka</p>
-                <p>{about.locationHours}</p>
+                {about.locationHours?.split(",").map((line, index) => (
+                  <p key={index}>{line.trim()}</p>
+                ))}
               </div>
             </div>
           </div>
